@@ -1,0 +1,23 @@
+Horas Ministradas =
+SUM(Fato_Professor[horas_ministradas])
+
+Qtd Turmas =
+SUM(Fato_Professor[qtd_turmas])
+
+Ofertas de Disciplina =
+COUNTROWS(Fato_Professor)
+
+Professores Ativos =
+DISTINCTCOUNT(Fato_Professor[id_professor])
+
+Cursos Atendidos =
+DISTINCTCOUNT(Fato_Professor[id_curso])
+
+Disciplinas Distintas =
+DISTINCTCOUNT(Fato_Professor[id_disciplina])
+
+Média de Horas por Professor =
+DIVIDE([Horas Ministradas], [Professores Ativos])
+
+Ofertas por Data do Curso =
+CALCULATE([Ofertas de Disciplina], USERELATIONSHIP(Fato_Professor[id_data_oferta_curso], Dim_Data[id_data]))
