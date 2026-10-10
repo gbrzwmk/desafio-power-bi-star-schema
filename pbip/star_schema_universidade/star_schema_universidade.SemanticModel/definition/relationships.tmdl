@@ -1,0 +1,24 @@
+relationship f798da4c-9c12-41ea-8c9d-41aa23bcb081
+	fromColumn: Fato_Professor.id_professor
+	toColumn: Dim_Professor.id_professor
+
+relationship c554201d-b7f1-45b3-a06d-7f2da0574335
+	fromColumn: Fato_Professor.id_departamento
+	toColumn: Dim_Departamento.id_departamento
+
+relationship 7f1471ba-01be-4480-bf9b-b8f922ef9a55
+	fromColumn: Fato_Professor.id_curso
+	toColumn: Dim_Curso.id_curso
+
+relationship 3412b342-e44e-4359-9d2b-affcc51cd871
+	fromColumn: Fato_Professor.id_disciplina
+	toColumn: Dim_Disciplina.id_disciplina
+
+relationship 4691435e-d281-48cd-8f0d-c2a80b0a8c62
+	fromColumn: Fato_Professor.id_data_oferta_disciplina
+	toColumn: Dim_Data.id_data
+
+relationship 90df8961-3173-48d3-94de-58ea0a863fa4
+	isActive: false
+	fromColumn: Fato_Professor.id_data_oferta_curso
+	toColumn: Dim_Data.id_data
