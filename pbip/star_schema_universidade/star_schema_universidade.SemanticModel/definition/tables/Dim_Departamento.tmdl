@@ -1,0 +1,54 @@
+table Dim_Departamento
+	lineageTag: 2a75005b-4020-4b6d-9368-d90cd011f806
+
+	column id_departamento
+		dataType: int64
+		lineageTag: 4b40ded4-ef87-4842-98e6-3ddee7d93a04
+		summarizeBy: none
+		sourceColumn: id_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_departamento
+		dataType: string
+		lineageTag: 19394f73-e4a2-4bc0-bdd4-7239e3aba7ad
+		summarizeBy: none
+		sourceColumn: nome_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column campus
+		dataType: string
+		lineageTag: 43cc6117-72d0-4517-b004-5b05538608cc
+		summarizeBy: none
+		sourceColumn: campus
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_professor_coordenador
+		dataType: int64
+		lineageTag: c433a6cc-1e48-4df0-95ef-a37932b12f77
+		summarizeBy: none
+		sourceColumn: id_professor_coordenador
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_coordenador
+		dataType: string
+		lineageTag: 4f4c6dfa-804d-4441-ac03-722c51505bef
+		summarizeBy: none
+		sourceColumn: nome_coordenador
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Departamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\dim_departamento.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_departamento", Int64.Type}, {"nome_departamento", type text}, {"campus", type text}, {"id_professor_coordenador", Int64.Type}, {"nome_coordenador", type text}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table

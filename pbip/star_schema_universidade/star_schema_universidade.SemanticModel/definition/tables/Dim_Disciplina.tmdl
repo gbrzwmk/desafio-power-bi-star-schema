@@ -1,0 +1,54 @@
+table Dim_Disciplina
+	lineageTag: cae417ad-9804-4fd4-8b65-5b3850184b92
+
+	column id_disciplina
+		dataType: int64
+		lineageTag: e185a1c2-b8f7-4b01-84d2-11466f7c8cbb
+		summarizeBy: none
+		sourceColumn: id_disciplina
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_disciplina
+		dataType: string
+		lineageTag: fcc0ab00-1dba-450c-84f8-d4d69d555050
+		summarizeBy: none
+		sourceColumn: nome_disciplina
+
+		annotation SummarizationSetBy = Automatic
+
+	column carga_horaria
+		dataType: int64
+		lineageTag: 16e55d2b-86e3-477b-a56d-21d313a326f8
+		summarizeBy: none
+		sourceColumn: carga_horaria
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtd_pre_requisitos
+		dataType: int64
+		lineageTag: 772e31fc-e8f7-4ea2-abdd-81736402349c
+		summarizeBy: none
+		sourceColumn: qtd_pre_requisitos
+
+		annotation SummarizationSetBy = Automatic
+
+	column pre_requisitos
+		dataType: string
+		lineageTag: 6558640d-da39-4ef3-9c7e-1c056c025eef
+		summarizeBy: none
+		sourceColumn: pre_requisitos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Disciplina = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\dim_disciplina.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_disciplina", Int64.Type}, {"nome_disciplina", type text}, {"carga_horaria", Int64.Type}, {"qtd_pre_requisitos", Int64.Type}, {"pre_requisitos", type text}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,105 @@
+table Dim_Data
+	lineageTag: 5027f7a9-78c0-4f4d-aee9-3119529fbcd9
+
+	column id_data
+		dataType: int64
+		lineageTag: cf74cd28-d58e-45ca-a17f-16a47611f57a
+		summarizeBy: none
+		sourceColumn: id_data
+
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: d58d69e8-f128-41a2-a72b-c06524fd0d99
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ano
+		dataType: int64
+		lineageTag: 40f0894f-4556-4596-92b4-406b4a754d2e
+		summarizeBy: none
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column semestre
+		dataType: int64
+		lineageTag: b33bda67-c26b-450e-86d4-22db225eb230
+		summarizeBy: none
+		sourceColumn: semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo_letivo
+		dataType: string
+		lineageTag: 09829750-e127-4541-8feb-9a23788d459d
+		summarizeBy: none
+		sourceColumn: periodo_letivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		lineageTag: c36215c8-e463-4b02-88f7-a01cf56e41d6
+		summarizeBy: none
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: 0bf40482-f953-4f95-9aee-aea1d06348a6
+		summarizeBy: none
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes
+		dataType: string
+		lineageTag: f62f0550-cd26-402c-8b2b-7d8e7daff857
+		summarizeBy: none
+		sourceColumn: nome_mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: int64
+		lineageTag: 4fd45a08-aa45-4565-bae8-bb160d1d9b61
+		summarizeBy: none
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: 565758ed-6e9d-409a-9c73-54e822e56a84
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column fim_de_semana
+		dataType: string
+		lineageTag: 364241d8-c404-4223-96b2-0299798916dc
+		summarizeBy: none
+		sourceColumn: fim_de_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Data = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\dim_data.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_data", Int64.Type}, {"data", type date}, {"ano", Int64.Type}, {"semestre", Int64.Type}, {"periodo_letivo", type text}, {"trimestre", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"dia", Int64.Type}, {"dia_semana", type text}, {"fim_de_semana", type text}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table

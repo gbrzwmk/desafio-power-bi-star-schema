@@ -1,0 +1,70 @@
+table Dim_Curso
+	lineageTag: 1ccd3bd8-5136-4115-a506-fffd539f6190
+
+	column id_curso
+		dataType: int64
+		lineageTag: 18f9999a-b4cf-46f1-adbf-737642540665
+		summarizeBy: none
+		sourceColumn: id_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_curso
+		dataType: string
+		lineageTag: d5cdda7c-d9e1-4633-87e8-1c734c86a864
+		summarizeBy: none
+		sourceColumn: nome_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel
+		dataType: string
+		lineageTag: 14a0d55e-6378-4fcb-8ebb-af06071c9c37
+		summarizeBy: none
+		sourceColumn: nivel
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_departamento
+		dataType: int64
+		lineageTag: 4b5a58c9-fae4-4a8c-9e99-b9527d5ea686
+		summarizeBy: none
+		sourceColumn: id_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_departamento
+		dataType: string
+		lineageTag: 3d9a7d6d-f1d3-418c-b4a3-ff6af11ee1a3
+		summarizeBy: none
+		sourceColumn: nome_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column duracao_semestres
+		dataType: int64
+		lineageTag: 5062b178-33c7-4e99-ab33-73d1453bdd9e
+		summarizeBy: none
+		sourceColumn: duracao_semestres
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtd_disciplinas
+		dataType: int64
+		lineageTag: 785f1564-5183-4c31-bc2b-31af4293b9bf
+		summarizeBy: none
+		sourceColumn: qtd_disciplinas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Curso = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\dim_curso.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_curso", Int64.Type}, {"nome_curso", type text}, {"nivel", type text}, {"id_departamento", Int64.Type}, {"nome_departamento", type text}, {"duracao_semestres", Int64.Type}, {"qtd_disciplinas", Int64.Type}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table

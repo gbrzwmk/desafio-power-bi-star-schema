@@ -1,0 +1,137 @@
+table Fato_Professor
+	lineageTag: 213d3521-5691-49e6-9d82-172d63493008
+
+	measure 'Horas Ministradas' = SUM(Fato_Professor[horas_ministradas])
+		formatString: #,0
+		lineageTag: ab94d24f-a20d-4e9d-8eb1-7162c75c368d
+
+	measure 'Qtd Turmas' = SUM(Fato_Professor[qtd_turmas])
+		formatString: #,0
+		lineageTag: 17a1876f-78a0-4501-b74b-724498782b8e
+
+	measure 'Ofertas de Disciplina' = COUNTROWS(Fato_Professor)
+		formatString: #,0
+		lineageTag: cb34467d-5f7d-4570-bfaa-60073a3201b2
+
+	measure 'Professores Ativos' = DISTINCTCOUNT(Fato_Professor[id_professor])
+		formatString: #,0
+		lineageTag: bba0696a-0173-4e4b-942e-db8f4d3536ce
+
+	measure 'Cursos Atendidos' = DISTINCTCOUNT(Fato_Professor[id_curso])
+		formatString: #,0
+		lineageTag: f67f403a-97b9-44b1-b4ae-e2829c22a40d
+
+	measure 'Disciplinas Distintas' = DISTINCTCOUNT(Fato_Professor[id_disciplina])
+		formatString: #,0
+		lineageTag: c2b6d71e-ec12-47be-971e-38661b3f5c85
+
+	measure 'Média de Horas por Professor' = DIVIDE([Horas Ministradas], [Professores Ativos])
+		formatString: #,0.0
+		lineageTag: 0ccf307a-af7b-493a-930c-f75c1429ff65
+
+	measure 'Ofertas por Data do Curso' = CALCULATE([Ofertas de Disciplina], USERELATIONSHIP(Fato_Professor[id_data_oferta_curso], Dim_Data[id_data]))
+		formatString: #,0
+		lineageTag: 9a3d4be1-4697-4051-be10-a8a24f80dbfc
+
+	column id_fato
+		dataType: int64
+		lineageTag: c4d17ff2-6b41-4d8c-9e4c-598b6a7ec488
+		summarizeBy: none
+		sourceColumn: id_fato
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_professor
+		dataType: int64
+		lineageTag: 40bbfc07-3682-4778-bf25-f78bffd5bcea
+		summarizeBy: none
+		sourceColumn: id_professor
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_departamento
+		dataType: int64
+		lineageTag: 7755a2b8-7d86-4b1f-89c9-7e541f7fd731
+		summarizeBy: none
+		sourceColumn: id_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_curso
+		dataType: int64
+		lineageTag: 3ee19d10-c289-44ca-bccb-913b8753477c
+		summarizeBy: none
+		sourceColumn: id_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_disciplina
+		dataType: int64
+		lineageTag: 8746cf1c-7fd2-413e-9589-274dcc05c1cf
+		summarizeBy: none
+		sourceColumn: id_disciplina
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_data_oferta_disciplina
+		dataType: int64
+		lineageTag: a18b60bf-1ad5-4863-8f90-becb7d327789
+		summarizeBy: none
+		sourceColumn: id_data_oferta_disciplina
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_data_oferta_curso
+		dataType: int64
+		lineageTag: 07f7a667-0671-4e22-ae80-7cd47196e961
+		summarizeBy: none
+		sourceColumn: id_data_oferta_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo_letivo
+		dataType: string
+		lineageTag: 792714be-1c13-4a02-887e-6372585a1b8b
+		summarizeBy: none
+		sourceColumn: periodo_letivo
+
+		annotation SummarizationSetBy = Automatic
+
+	column carga_horaria_disciplina
+		dataType: int64
+		formatString: 0
+		lineageTag: 719efbd8-c270-4bca-865d-4b4ba45e7e5c
+		summarizeBy: sum
+		sourceColumn: carga_horaria_disciplina
+
+		annotation SummarizationSetBy = User
+
+	column qtd_turmas
+		dataType: int64
+		formatString: 0
+		lineageTag: 19d8fcae-f4ba-4594-9bcc-0bec6e46c2ff
+		summarizeBy: sum
+		sourceColumn: qtd_turmas
+
+		annotation SummarizationSetBy = User
+
+	column horas_ministradas
+		dataType: int64
+		formatString: 0
+		lineageTag: 33decc92-3586-4c3b-8333-d4a2ea4467af
+		summarizeBy: sum
+		sourceColumn: horas_ministradas
+
+		annotation SummarizationSetBy = User
+
+	partition Fato_Professor = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\fato_professor.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_fato", Int64.Type}, {"id_professor", Int64.Type}, {"id_departamento", Int64.Type}, {"id_curso", Int64.Type}, {"id_disciplina", Int64.Type}, {"id_data_oferta_disciplina", Int64.Type}, {"id_data_oferta_curso", Int64.Type}, {"periodo_letivo", type text}, {"carga_horaria_disciplina", Int64.Type}, {"qtd_turmas", Int64.Type}, {"horas_ministradas", Int64.Type}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table

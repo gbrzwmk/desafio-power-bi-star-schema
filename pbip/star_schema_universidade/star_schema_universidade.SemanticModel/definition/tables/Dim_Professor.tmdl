@@ -1,0 +1,89 @@
+table Dim_Professor
+	lineageTag: f267009d-8a86-4c0d-b20f-2f1d82fb1824
+
+	column id_professor
+		dataType: int64
+		lineageTag: e0c742fe-badb-49e9-986a-27cbee356db1
+		summarizeBy: none
+		sourceColumn: id_professor
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_professor
+		dataType: string
+		lineageTag: 612838d7-2f32-4500-8da9-6521f27bfb20
+		summarizeBy: none
+		sourceColumn: nome_professor
+
+		annotation SummarizationSetBy = Automatic
+
+	column titulacao
+		dataType: string
+		lineageTag: 9623efc6-fcdc-4ff5-ab62-ac63f17ed5d7
+		summarizeBy: none
+		sourceColumn: titulacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column regime_trabalho
+		dataType: string
+		lineageTag: ed261bbf-b39c-41ff-b728-da87d309b798
+		summarizeBy: none
+		sourceColumn: regime_trabalho
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_contratacao
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 85f7d137-d1ae-4f16-a17a-45daf1ce9e58
+		summarizeBy: none
+		sourceColumn: data_contratacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column id_departamento
+		dataType: int64
+		lineageTag: 5cf8936d-0a3d-4dad-b4c4-9647bb83fdc6
+		summarizeBy: none
+		sourceColumn: id_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_departamento
+		dataType: string
+		lineageTag: a0390619-1ec2-424b-9d45-d144faeca058
+		summarizeBy: none
+		sourceColumn: nome_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column campus
+		dataType: string
+		lineageTag: f1ab8d26-4838-4330-8bcc-e9e9052cd9e2
+		summarizeBy: none
+		sourceColumn: campus
+
+		annotation SummarizationSetBy = Automatic
+
+	column coordenador_departamento
+		dataType: string
+		lineageTag: e32a7f68-6e7b-465d-b619-1fb8eb08c54c
+		summarizeBy: none
+		sourceColumn: coordenador_departamento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Professor = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents(PastaDados & "\dim_professor.csv"), [Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos", {{"id_professor", Int64.Type}, {"nome_professor", type text}, {"titulacao", type text}, {"regime_trabalho", type text}, {"data_contratacao", type date}, {"id_departamento", Int64.Type}, {"nome_departamento", type text}, {"campus", type text}, {"coordenador_departamento", type text}}, "en-US")
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
