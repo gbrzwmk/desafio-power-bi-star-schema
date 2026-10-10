@@ -1,0 +1,81 @@
+digraph star {
+  graph [bgcolor="white", fontname="Segoe UI", pad=0.3, splines=true];
+  node  [shape=plaintext, fontname="Segoe UI", fontsize=11];
+  edge  [color="#5B6B7A", penwidth=1.6, arrowhead=crow, arrowtail=none, dir=forward];
+
+  fato [pos="0,0!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1F3A5F">
+      <TR><TD BGCOLOR="#1F3A5F" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Fato_Professor</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#EAF0F7">PK</TD><TD ALIGN="LEFT" BGCOLOR="#EAF0F7">id_fato</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_professor</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_departamento</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_curso</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_disciplina</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_data_oferta_disciplina</TD></TR>
+      <TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">id_data_oferta_curso</TD></TR>
+      <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">periodo_letivo</TD></TR>
+      <TR><TD ALIGN="LEFT">Σ</TD><TD ALIGN="LEFT">carga_horaria_disciplina</TD></TR>
+      <TR><TD ALIGN="LEFT">Σ</TD><TD ALIGN="LEFT">qtd_turmas</TD></TR>
+      <TR><TD ALIGN="LEFT">Σ</TD><TD ALIGN="LEFT">horas_ministradas</TD></TR>
+    </TABLE>>];
+
+  professor [pos="-5.4,2.9!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#2E7D5B">
+      <TR><TD BGCOLOR="#2E7D5B" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Dim_Professor</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">PK</TD><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">id_professor</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_professor</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">titulacao</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">regime_trabalho</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">data_contratacao</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_departamento</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">campus</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">coordenador_departamento</TD></TR>
+    </TABLE>>];
+
+  departamento [pos="-5.4,-2.7!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#2E7D5B">
+      <TR><TD BGCOLOR="#2E7D5B" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Dim_Departamento</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">PK</TD><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">id_departamento</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_departamento</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">campus</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">id_professor_coordenador</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_coordenador</TD></TR>
+    </TABLE>>];
+
+  curso [pos="5.4,2.9!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#2E7D5B">
+      <TR><TD BGCOLOR="#2E7D5B" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Dim_Curso</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">PK</TD><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">id_curso</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_curso</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nivel</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_departamento</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">duracao_semestres</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">qtd_disciplinas</TD></TR>
+    </TABLE>>];
+
+  disciplina [pos="5.4,-2.7!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#2E7D5B">
+      <TR><TD BGCOLOR="#2E7D5B" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Dim_Disciplina</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">PK</TD><TD ALIGN="LEFT" BGCOLOR="#EAF5EF">id_disciplina</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">nome_disciplina</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">carga_horaria</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">qtd_pre_requisitos</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">pre_requisitos</TD></TR>
+    </TABLE>>];
+
+  data [pos="0,-5.3!", label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#B8641B">
+      <TR><TD BGCOLOR="#B8641B" COLSPAN="2"><FONT COLOR="white" POINT-SIZE="13"><B>Dim_Data</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#FBF0E6">PK</TD><TD ALIGN="LEFT" BGCOLOR="#FBF0E6">id_data (AAAAMMDD)</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">data · ano · semestre · periodo_letivo</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">trimestre · mes · nome_mes · dia</TD></TR>
+      <TR><TD></TD><TD ALIGN="LEFT">dia_semana · fim_de_semana</TD></TR>
+    </TABLE>>];
+
+  professor -> fato;
+  departamento -> fato;
+  curso -> fato;
+  disciplina -> fato;
+  data -> fato [label="oferta da disciplina (ativo)      ", labelfloat=true, fontsize=9, fontcolor="#5B6B7A"];
+  data -> fato [style=dashed, label="      oferta do curso (inativo)", labelfloat=true, fontsize=9, fontcolor="#5B6B7A"];
+}
