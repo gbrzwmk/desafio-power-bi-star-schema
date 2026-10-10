@@ -1,0 +1,13 @@
+id_disciplina,nome_disciplina,carga_horaria,qtd_pre_requisitos,pre_requisitos
+1,Algoritmos e Programação,80,0,Nenhum
+2,Estruturas de Dados,80,1,Algoritmos e Programação
+3,Banco de Dados,60,1,Estruturas de Dados
+4,Inteligência Artificial,60,2,Estruturas de Dados; Cálculo I
+5,Circuitos Elétricos,80,1,Cálculo I
+6,Eletrônica Digital,60,1,Circuitos Elétricos
+7,Cálculo I,80,0,Nenhum
+8,Cálculo II,80,1,Cálculo I
+9,Álgebra Linear,60,0,Nenhum
+10,Estatística Aplicada,60,1,Cálculo I
+11,Sistemas de Controle,60,2,Circuitos Elétricos; Cálculo II
+12,Visualização de Dados,40,2,Banco de Dados; Estatística Aplicada

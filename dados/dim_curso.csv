@@ -1,0 +1,5 @@
+id_curso,nome_curso,nivel,id_departamento,nome_departamento,duracao_semestres,qtd_disciplinas
+1,Bacharelado em Ciência da Computação,Graduação,1,Ciência da Computação,8,8
+2,Engenharia Elétrica,Graduação,2,Engenharia Elétrica,10,6
+3,Licenciatura em Matemática,Graduação,3,Matemática,8,4
+4,Especialização em Ciência de Dados,Pós-graduação,1,Ciência da Computação,3,4

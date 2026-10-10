@@ -1,0 +1,11 @@
+id_professor,nome_professor,titulacao,regime_trabalho,data_contratacao,id_departamento,nome_departamento,campus,coordenador_departamento
+1,Ana Beatriz Moraes,Doutorado,Dedicação exclusiva,2015-03-02,1,Ciência da Computação,Campus Central,Não
+2,Carlos Eduardo Lima,Mestrado,40 horas,2018-08-13,1,Ciência da Computação,Campus Central,Não
+3,Fernanda Souza Prado,Doutorado,Dedicação exclusiva,2010-02-15,1,Ciência da Computação,Campus Central,Sim
+4,Gustavo Henrique Reis,Doutorado,40 horas,2019-03-04,2,Engenharia Elétrica,Campus Norte,Não
+5,Juliana Castro Nunes,Mestrado,20 horas,2021-08-02,2,Engenharia Elétrica,Campus Norte,Não
+6,Marcos Vinícius Teles,Doutorado,Dedicação exclusiva,2012-03-05,2,Engenharia Elétrica,Campus Norte,Sim
+7,Patrícia Alves Rocha,Doutorado,40 horas,2016-08-01,3,Matemática,Campus Central,Não
+8,Ricardo Tavares Melo,Doutorado,Dedicação exclusiva,2008-02-18,3,Matemática,Campus Central,Sim
+9,Sofia Martins Campos,Mestrado,20 horas,2022-03-07,3,Matemática,Campus Central,Não
+10,Thiago Barbosa Freitas,Doutorado,40 horas,2020-02-03,1,Ciência da Computação,Campus Central,Não
